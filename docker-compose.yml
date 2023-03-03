@@ -3,21 +3,23 @@ version: '3.1'
 services:
 
   db:
-    image: fametec/bacula-catalog:11.0.6
+    image: vernetsupinterno/bacula-catalog:11.0.6
     restart: unless-stopped
     environment:
       POSTGRES_PASSWORD: bacula
       POSTGRES_USER: bacula
       POSTGRES_DB: bacula
-    # volumes:
-    #   - pgdata:/var/lib/postgresql/data:rw
+    volumes:
+      - /etc/localtime:/etc/localtime:ro #Utiliza a mesma timezone do Server principal, mantendo o horário sincronizado.
+      - ./pgdata:/var/lib/postgresql/data:rw
     ports:
       - 5432:5432
 #
   bacula-dir:
-    image: fametec/bacula-director:11.0.6
+    image: vernetsupinterno/bacula-dir:11.0.6
     restart: unless-stopped
     volumes:
+      - /etc/localtime:/etc/localtime:ro #Utiliza a mesma timezone do Server principal, mantendo o horário sincronizado.
       - ./etc:/opt/bacula/etc:ro
     depends_on: 
       - db      
@@ -25,49 +27,54 @@ services:
       - 9101:9101
 #
   bacula-sd:
-    image: fametec/bacula-storage:11.0.6
+    image: vernetsupinterno/bacula-sd:11.0.6
     restart: unless-stopped
     depends_on:
       - bacula-dir
       - db
     volumes:
+      - /etc/localtime:/etc/localtime:ro #Utiliza a mesma timezone do Server principal, mantendo o horário sincronizado.
       - ./etc:/opt/bacula/etc:ro
     ports:
       - 9103:9103
 #
   bacula-fd:
-    image: fametec/bacula-client:11.0.6
+    image: vernetsupinterno/bacula-fd:11.0.6
     restart: unless-stopped
     depends_on:
       - bacula-sd
       - bacula-dir
       - db
     volumes:
+      - /etc/localtime:/etc/localtime:ro #Utiliza a mesma timezone do Server principal, mantendo o horário sincronizado.
       - ./etc:/opt/bacula/etc:ro
     ports:
       - 9102:9102
 #
   baculum-api:
-    image: fametec/baculum-api:11.0.6
+    image: vernetsupinterno/baculum-api:11.0.6
     restart: unless-stopped
     depends_on: 
       - db
       - bacula-dir
     volumes:
+      - /etc/localtime:/etc/localtime:ro #Utiliza a mesma timezone do Server principal, mantendo o horário sincronizado.
       - ./etc/bconsole.conf:/opt/bacula/etc/bconsole.conf:ro
-      - ./etc/baculum:/etc/baculum:rw
+      - ./etc/baculum:/etc/baculum:z
+      - ./etc:/opt/bacula/etc:z
     ports:
       - 9096:9096
 
 #
   baculum-web:
-    image: fametec/baculum-web:11.0.6
+    image: vernetsupinterno/baculum-web:11.0.6
     restart: unless-stopped
     depends_on: 
       - baculum-api
     volumes:
+      - /etc/localtime:/etc/localtime:ro #Utiliza a mesma timezone do Server principal, mantendo o horário sincronizado.
       - ./etc/bconsole.conf:/opt/bacula/etc/bconsole.conf:ro
-      - ./etc/baculum:/etc/baculum:rw
+      - ./etc/baculum:/etc/baculum:z
     ports:
       - 9095:9095
 
@@ -76,7 +83,7 @@ services:
 #  pgdata:
 #
 #  gmail:
-#    image: fametec/postfix:gmail
+#    image: vernetsupinterno/postfix:gmail
 #    restart: unless-stopped
 #    depends_on:
 #      - bacula-dir
