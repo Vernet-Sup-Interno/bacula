@@ -1,7 +1,5 @@
 FROM centos:7
 
-MAINTAINER Eduardo Fraga <eduardo.fraga@fametec.com.br>
-
 ENV BACULA_VERSION 11.0.6
 
 # get your key on: https://www.bacula.org/bacula-binary-package-download/

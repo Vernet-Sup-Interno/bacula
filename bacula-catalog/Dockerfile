@@ -2,8 +2,6 @@ FROM fametec/bacula-base:11.0.6 AS base
 
 FROM postgres:10
 
-MAINTAINER eduardo@fametec.com.br
-
 ENV POSTGRES_PASSWORD bacula
 
 ENV POSTGRES_USER bacula

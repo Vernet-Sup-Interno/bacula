@@ -1,7 +1,5 @@
 FROM fametec/bacula-base:11.0.6
 
-MAINTAINER eduardo@fametec.com.br
-
 RUN rpm --import https://www.bacula.org/downloads/baculum/baculum.pub
 
 COPY baculum.repo /etc/yum.repos.d/baculum.repo

@@ -1,7 +1,5 @@
 FROM fametec/bacula-base:11.0.6
 
-MAINTAINER eduardo@fametec.com.br
-
 VOLUME ["/opt/bacula/etc"]
 
 EXPOSE 9101/tcp
