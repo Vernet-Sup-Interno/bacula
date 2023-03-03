@@ -1,4 +1,4 @@
-FROM fametec/bacula-base:11.0.5
+FROM fametec/bacula-base:11.0.6
 
 MAINTAINER eduardo@fametec.com.br
 
