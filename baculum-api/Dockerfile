@@ -1,4 +1,4 @@
-FROM fametec/bacula-base:11.0.6
+FROM vernetsupinterno/bacula-base:11.0.6
 
 RUN rpm --import https://www.bacula.org/downloads/baculum/baculum.pub
 

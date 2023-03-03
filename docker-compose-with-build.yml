@@ -4,7 +4,7 @@ services:
 
   base: 
     build: bacula-base/
-    image: fametec/bacula-base:11.0.6
+    image: vernetsupinterno/bacula-base:11.0.6
 #    
   db:
     build: bacula-catalog/

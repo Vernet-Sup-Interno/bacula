@@ -1,4 +1,4 @@
-FROM fametec/bacula-base:11.0.6
+FROM vernetsupinterno/bacula-base:11.0.6
 
 VOLUME ["/opt/bacula/etc"]
 
